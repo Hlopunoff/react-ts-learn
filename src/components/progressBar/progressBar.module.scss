@@ -1,0 +1,17 @@
+.progress {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 80%;
+    height: 15px;
+    border-radius: 20px;
+    background-color: rgb(185, 183, 183);
+    &__line {
+        position: absolute;
+        left: 0;
+        height: 100%;
+        border-radius: 20px;
+        background-color: #FF7777;
+        transition: all 0.3s ease;
+    }
+}
