@@ -1,0 +1,74 @@
+@import '../../style/funcs';
+.auth {
+    width: 100vw;
+    height: 100vh;
+    background: #067EFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form {
+    padding: 30px 76px 35px 76px;
+    width: 460px;
+    background: #FFFFFF;
+    border: 1px solid #409CFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    text-align: center;
+    &__title {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+        letter-spacing: 0.3px;
+        color: #409CFF;
+    }
+    &__fields {
+        width: prc(307, 460);
+        margin: 0 auto;
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 29px;
+    }
+    &__field {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 9px;
+    }
+    &__label {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 23px;
+    }
+    &__input {
+        width: 100%;
+        height: 56px;
+        background: #fff;
+        padding: 10px 17px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        letter-spacing: 0.3px;
+        color: #D0D0D1;
+        border: 2px solid #CECECE;
+        border-radius: 10px;
+    }
+    &__btn {
+        margin-top: 47px;
+        padding: 13px 65px;
+        background: #FFD306;
+        border: none;
+        border-radius: 50px;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 23px;
+        letter-spacing: 0.3px;
+        cursor: pointer;
+    }
+}

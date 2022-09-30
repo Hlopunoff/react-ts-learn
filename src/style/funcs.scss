@@ -1,0 +1,4 @@
+@function prc($child, $parent) {
+    $result: calc($child / $parent) * 100%;
+    @return $result;
+}
