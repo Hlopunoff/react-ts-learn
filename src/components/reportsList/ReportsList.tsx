@@ -1,12 +1,11 @@
 
 import st from './reportsList.module.scss';
 
-import trashIcon from '../../assets/icons/trash.svg';
 import { SingleReport } from '../singleReport/SingleReport';
 
 export const ReportsList = () => {
     return (
-        <section className={st['reports']}>
+        <div className={st['reports']}>
             <h2 className={st['reports__title']}>Все отчёты</h2>
             <div className={st['reports__header']}>
                 <div className={st['reports__heading']}>
@@ -23,10 +22,22 @@ export const ReportsList = () => {
                 </div>
             </div>
             <div className={st['reports__body']}>
-                <SingleReport/>
-                <SingleReport/>
-                <SingleReport/>
+                <SingleReport 
+                    statusType='done' 
+                    status='progress' 
+                    vehicleId='4F2YU08102KM26251'
+                    idType='VIN'/>
+                <SingleReport 
+                    statusType='progress' 
+                    status='done' 
+                    vehicleId='4F2YU08102KM26251'
+                    idType='ГРЗ'/>
+                <SingleReport 
+                    statusType='error' 
+                    status='error' 
+                    vehicleId='4F2YU08102KM26251'
+                    idType='BODY'/>
             </div>
-        </section>
+        </div>
     );
 };

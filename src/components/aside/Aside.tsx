@@ -7,10 +7,10 @@ export const Aside = () => {
         <aside className={st['aside']}>
             <h2 className={st['aside__title']}>Demo application</h2>
             <NavLink 
-                to="/reports" 
+                to="/" 
                 className={({isActive}) => isActive ? (st['aside__navlink']) : undefined}
                 >Список отчётов</NavLink>
-            <Link to="/" className={st['aside__goback']}>Выйти</Link>
+            <Link to="/login" className={st['aside__goback']}>Выйти</Link>
         </aside>
     );
 };
