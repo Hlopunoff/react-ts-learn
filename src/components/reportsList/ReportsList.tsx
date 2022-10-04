@@ -1,9 +1,31 @@
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/hooks';
 
 import st from './reportsList.module.scss';
 
 import { SingleReport } from '../singleReport/SingleReport';
+import { fetchReports } from '../../slices/reportSlice';
 
 export const ReportsList = () => {
+    const dispatch = useAppDispatch();
+    const {list: reports, error: isError, loading} = useAppSelector(state => state.reports);
+
+    useEffect(() => {
+        dispatch(fetchReports());
+    }, [ ]);
+
+    const spinner = loading ? <h2>Загрузка...</h2> : null;
+    const error = isError ? <h2>Ошибка!</h2> : null;
+    const content = !(spinner || error || !reports) ? reports.map(report => {
+        return <SingleReport 
+            key={report.vehicleId} 
+            vehicleId={report.vehicleId}
+            idType={report.idType}
+            statusType={report.statusType}
+            date={report.date}
+            id={report.id}/>
+    }) : null;
+
     return (
         <div className={st['reports']}>
             <h2 className={st['reports__title']}>Все отчёты</h2>
@@ -22,21 +44,9 @@ export const ReportsList = () => {
                 </div>
             </div>
             <div className={st['reports__body']}>
-                <SingleReport 
-                    statusType='done' 
-                    status='progress' 
-                    vehicleId='4F2YU08102KM26251'
-                    idType='VIN'/>
-                <SingleReport 
-                    statusType='progress' 
-                    status='done' 
-                    vehicleId='4F2YU08102KM26251'
-                    idType='ГРЗ'/>
-                <SingleReport 
-                    statusType='error' 
-                    status='error' 
-                    vehicleId='4F2YU08102KM26251'
-                    idType='BODY'/>
+                {spinner}
+                {error}
+                {content}
             </div>
         </div>
     );

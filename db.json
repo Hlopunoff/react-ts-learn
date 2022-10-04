@@ -1,0 +1,25 @@
+{
+    "reports": [
+        {
+            "id": 1,
+            "statusType": "progress",
+            "vehicleId": "4F2YU08102KM26251",
+            "idType": "VIN",
+            "date":"26.05.2019 11:52:00"
+        },
+        {
+            "id": 2,
+            "statusType": "error",
+            "vehicleId": "4F2YU08102KM25251",
+            "idType": "ГРЗ",
+            "date": "26.05.2019 12:00:00"
+        },
+        {
+            "id": 3,
+            "statusType": "done",
+            "vehicleId": "4F2YU08102KM22251",
+            "idType": "BODY",
+            "date": "26.05.2019 10:00:00"
+        }
+    ]
+}

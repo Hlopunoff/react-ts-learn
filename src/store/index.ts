@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
+import reports from '../slices/reportSlice';
 
 const store = configureStore({
-    reducer: {},
+    reducer: {reports},
     devTools: process.env.NODE_ENV !== "production" ? true : false,
 });
 
