@@ -1,5 +1,5 @@
 import {useAppDispatch} from '../../hooks/hooks';
-import {deleteReport} from '../../slices/reportSlice';
+import {removeReport as deleteReport} from '../../slices/reportSlice';
 
 import st from './singleReport.module.scss';
 import trashIcon from '../../assets/icons/trash.svg';
@@ -13,15 +13,15 @@ const statusStyle = {
 interface SingleReportProps {
     statusType: 'progress' | 'done' | 'error';
     vehicleId: string;
-    idType: 'VIN' | 'ГРЗ' | 'BODY';
+    idType: string;
     date: string;
-    id: number;
+    id: string;
 }
 
 export const SingleReport: React.FC<SingleReportProps> = ({statusType, vehicleId, idType, date, id}) => {
     const dispatch = useAppDispatch();
 
-    const removeReport = (id: number) => {
+    const removeReport = (id: string) => {
         dispatch(deleteReport(id));
     };
 

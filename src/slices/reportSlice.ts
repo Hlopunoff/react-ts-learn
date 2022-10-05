@@ -1,13 +1,14 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { Console } from 'console';
 // import {collection, DocumentData, getDocs} from 'firebase/firestore';
 // import {db} from '../firebase';
 
-type Report = {
+export type Report = {
     statusType: 'progress' | 'done' | 'error';
     vehicleId: string;
-    idType: 'VIN' | 'ГРЗ' | 'BODY';
+    idType: string;
     date: string;
-    id: number;
+    id: string;
 }
 
 type ReportsState = {
@@ -38,16 +39,48 @@ export const fetchReports = createAsyncThunk<Report[], undefined>(
             
         }
     }
+);
+
+export const addNewReport = createAsyncThunk<Report, string>(
+    'reports/AddNewReport',
+    async (report) => {
+        const res = await fetch('http://localhost:3001/reports', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: report
+        });
+        console.log(JSON.parse(report));
+
+        if(!res.ok) {
+            throw new Error(`Could not add new report!`);
+        }
+        return JSON.parse(report);
+    }
+);
+
+export const removeReport = createAsyncThunk<number, string>(
+    'reports/removeReport',
+    async (id) => {
+        const res = await fetch(`http://localhost:3001/reports/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if(!res.ok) {
+            throw new Error(`Could not delete report`);
+        }
+        return +id;
+    }
 )
 
 const reportSlice = createSlice({
     name: 'reports',
     initialState,
-    reducers: {
-        deleteReport: (state, action: PayloadAction<number>) => {
-            state.list = state.list.filter(({id}) => id !== action.payload)
-        }
-    },
+    reducers: {},
     extraReducers: builder => {
         builder.addCase(fetchReports.pending, (state) => {
             state.loading = true
@@ -60,9 +93,23 @@ const reportSlice = createSlice({
         .addCase(fetchReports.rejected, (state) => {
             state.loading = false;
             state.error = true;
-        });
+        })
+        .addCase(addNewReport.pending, state => {
+            state.loading = true;
+            state.error = false;
+        })
+        .addCase(addNewReport.fulfilled, (state, action) => {
+            state.list.push(action.payload);
+            state.loading = false;
+        })
+        .addCase(addNewReport.rejected, state => {
+            state.loading = false;
+            state.error = true;
+        })
+        .addCase(removeReport.fulfilled, (state, action) => {
+            state.list = state.list.filter(({id}) => +id !== action.payload);
+        })
     }
 });
 
 export default reportSlice.reducer;
-export const {deleteReport} = reportSlice.actions;
