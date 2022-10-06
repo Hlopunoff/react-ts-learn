@@ -8,10 +8,12 @@ import { fetchReports } from '../../slices/reportSlice';
 
 export const ReportsList = () => {
     const dispatch = useAppDispatch();
-    const {list: reports, error: isError, loading} = useAppSelector(state => state.reports);
+    const {list: reports, error: isError, loading} = useAppSelector(state => {
+        return state.reports;
+    });
 
     useEffect(() => {
-        dispatch(fetchReports());
+        dispatch(fetchReports('1'));
     }, [ ]);
 
     const spinner = loading ? <h2>Загрузка...</h2> : null;

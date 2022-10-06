@@ -1,7 +1,6 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { Console } from 'console';
-// import {collection, DocumentData, getDocs} from 'firebase/firestore';
-// import {db} from '../firebase';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {doc, getDoc} from 'firebase/firestore';
+import {db} from '../firebase';
 
 export type Report = {
     statusType: 'progress' | 'done' | 'error';
@@ -24,19 +23,36 @@ const initialState: ReportsState = {
 };
 
 
-export const fetchReports = createAsyncThunk<Report[], undefined>(
-    'reports/fetchReports',
-    async () => {
-        try {
-            const res = await fetch('http://localhost:3001/reports');
-            if(!res.ok) {
-                throw new Error(`Could not fetch reports!`);
-            }
-            const data = await res.json();
+// export const fetchReports = createAsyncThunk<Report[], undefined>(
+//     'reports/fetchReports',
+//     async () => {
+//         try {
+//             const res = await fetch('http://localhost:3001/reports');
+//             if(!res.ok) {
+//                 throw new Error(`Could not fetch reports!`);
+//             }
+//             const data = await res.json();
 
-            return data;
-        } catch (error) {
+//             return data;
+//         } catch (error) {
             
+//         }
+//     }
+// );
+
+export const fetchReports = createAsyncThunk<Report[], string, {rejectValue: string}>(
+    'reports/fetchReports',
+    async (id, {rejectWithValue}) => {
+        try {
+            const querySnapshot = await getDoc(doc(db, 'users', 'userIds'));
+            if (querySnapshot.exists()) {
+                const data = querySnapshot.data();
+                return data[id].reports;
+            } else {
+                throw new Error('Now such document in db!');
+            }
+        } catch (error: any) {
+            return rejectWithValue(error.message);
         }
     }
 );
@@ -59,6 +75,7 @@ export const addNewReport = createAsyncThunk<Report, string>(
         return JSON.parse(report);
     }
 );
+
 
 export const removeReport = createAsyncThunk<number, string>(
     'reports/removeReport',

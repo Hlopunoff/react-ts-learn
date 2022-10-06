@@ -34,7 +34,7 @@ export const SingleReport: React.FC<SingleReportProps> = ({statusType, vehicleId
                 <span className="report__type">{idType}</span>
             </div>
             <div className={st['report__col']}>
-                <span className="report__date">{date}</span>
+                <span className="report__date">{date.toString()}</span>
             </div>
             <div className={st['report__col']}>
                 <span className={st['report__status']} style={{background: statusStyle[statusType]}}>{statusType}</span>
